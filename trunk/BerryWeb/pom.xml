@@ -1,0 +1,169 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.cloudberry.web</groupId>
+	<artifactId>berry-web</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>CloudBerry PI project WEB</name>
+
+	<dependencies>
+		  <!-- javaee6 -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
+ 
+ 
+        <!-- weld -->
+		<dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet</artifactId>
+            <version>${weld-version}</version>
+        </dependency>
+ 		
+         
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+            		 
+		
+		<!-- JETTY -->
+		 <!--  
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-plus</artifactId>
+			<version>9.0.2.v20130417</version>
+			<scope>provided</scope>
+		</dependency>
+				
+       
+		  <dependency>
+			<groupId>org.jboss.seam.persistence</groupId>
+			<artifactId>seam-persistence-api</artifactId>
+			<version>${seam.persistence.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.seam.persistence</groupId>
+			<artifactId>seam-persistence-impl</artifactId>
+			<version>${seam.persistence.version}</version>
+		</dependency>
+ 
+ 		
+		<dependency>
+			<groupId>org.jboss.seam.solder</groupId>
+			<artifactId>seam-solder</artifactId>
+			<version>${seam.solder-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.seam.xml</groupId>
+			<artifactId>seam-xml-config</artifactId>
+			<version>${seam.xml.version}</version>
+		</dependency>
+-->	 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate-core-version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate-core-version}</version>
+		</dependency>
+	<!--	
+		 <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>${hibernate-annotations-version}</version>
+		</dependency>
+		
+	
+		 <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator-version}</version>
+		</dependency>
+		 
+-->
+            
+		 
+		 
+		<!-- only for  test  -->
+		
+	
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.10</version>
+		</dependency>
+		
+		<dependency>
+	<groupId>commons-dbcp</groupId>
+	<artifactId>commons-dbcp</artifactId>
+	<version>20030825.184428</version>
+</dependency>
+            	 
+		<dependency>
+	<groupId>commons-pool</groupId>
+	<artifactId>commons-pool</artifactId>
+	<version>1.4</version>
+</dependency>
+
+           
+		
+	</dependencies>
+	<build>
+		<finalName>berry-web</finalName>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-version}</version>
+
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin-version}</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<!-- webappDirectory>${JETTY_HOME}/webapps/${project.build.finalName}</webappDirectory -->
+				</configuration>
+			</plugin>
+
+
+
+		</plugins>
+	</build>
+
+
+	<properties>
+		<weld-version>2.0.0.Final</weld-version>
+        <maven-compiler-version>3.1</maven-compiler-version>    
+		<maven-war-plugin-version>2.3</maven-war-plugin-version>
+		<seam.persistence.version>3.0.0.Final</seam.persistence.version>
+		<seam.solder-version>3.0.0.Final</seam.solder-version>
+		<seam.xml.version>3.0.0.Alpha2</seam.xml.version>
+		<hibernate-core-version>4.2.1.Final</hibernate-core-version>
+		<hibernate-validator-version>5.0.0.Final</hibernate-validator-version>
+		<hibernate-annotations-version>3.5.6-Final</hibernate-annotations-version>		
+	</properties>
+</project>
