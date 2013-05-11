@@ -1,4 +1,4 @@
-package jpa.db;
+package org.berrycloud.core.db.factory;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,18 +9,19 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
-import model.entity.UserTest;
-
 import org.hibernate.MappingException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.metamodel.MetadataSources;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 public class SessionConfigurationFactory {
 
-	private String packageName="model.entiry";
+	
+	public static SessionFactory sessionFactory;
+	
+	
+	private String packageName="org.berrycloud.model.entity";
 	private String userName="SA";
 	private String password="";
 	private String c3p0MinSize="2";
@@ -30,64 +31,42 @@ public class SessionConfigurationFactory {
 	private String c3p0IdlePeriod="3000";
 	private String defautSchema="berry";
 	private String showSql="true";
+	private String formatSql = "true";
 	private String dialect = "org.hibernate.dialect.HSQLDialect";
 	private String dataSource = "jdbc:hsqldb:hsql://192.168.1.20/xdb";
 
 	public SessionFactory build() throws MappingException,
 			ClassNotFoundException, IOException {
 		Configuration cfg = new Configuration();
-		
-//		for (Class clazz : getEntityClasses(packageName)) {
-//			cfg.addAnnotatedClass(clazz);
-//		}
-		
-		
-		cfg.addAnnotatedClass(UserTest.class);
-//		cfg.setProperty("dialect", dialect)
-//		.setProperty("hibernate.connection.driver_class","org.hsqldb.jdbc.JDBCDriver")
-//		//.setProperty("hibernate.connection.url",dataSource)
-//				//.setProperty("hibernate.connection.datasource", dataSource)
-//				//.setProperty("hibernate.order_updates", "true")
-//
-//				//.setProperty("hibernate.default_schema", defautSchema)
-//				.setProperty("show_sql", showSql)
-//				.setProperty("hibernate.format_sql","true")
-//				.setProperty("hibernate.generate_statistics","true")
-//				
-//				.setProperty("hbm2ddl.auto"," create-drop")
-//				.setProperty("hibernate.dialect", dialect)
-//				.setProperty("hibernate.connection.username", userName)
-//				.setProperty("hibernate.connection.password", password)
-//
-//				// Pool
-//				.setProperty("hibernate.c3p0.idle_test_period", c3p0IdlePeriod)
-//				.setProperty("hibernate.c3p0.min_size", c3p0MinSize)
-//				.setProperty("hibernate.c3p0.max_size", c3p0MaxSize)
-//				.setProperty("hibernate.c3p0.timeout", c3p0TimeOut)
-//				.setProperty("hibernate.c3p0.max_statements", c3p0MaxStatement);
 
+		for (@SuppressWarnings("rawtypes")
+		Class clazz : getEntityClasses(packageName)) {
+			cfg.addAnnotatedClass(clazz);
+		}
 		Properties pr = new Properties();
-		
-		   pr.setProperty("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver");
-		   pr.setProperty("hibernate.connection.url",dataSource);
-		   pr.setProperty("hibernate.connection.password" ,password);
-		   pr.setProperty("hibernate.connection.username" ,userName);
-		   pr.setProperty("hibernate.hbm2ddl.auto" ,"create-drop");
-		   pr.setProperty("hibernate.dialect" ,"org.hibernate.dialect.HSQLDialect");
-		   pr.setProperty("hibernate.show_sql" ,"true");
-		   pr.setProperty("hibernate.format_sql" ,"true");
-		   pr.setProperty("hibernate.default_schema", defautSchema);
-		   pr.setProperty("hibernate.generate_statistics","true");
-		   
-		   pr.setProperty("hibernate.c3p0.idle_test_period", c3p0IdlePeriod);
-		   pr.setProperty("hibernate.c3p0.min_size", c3p0MinSize);
-		   pr.setProperty("hibernate.c3p0.max_size", c3p0MaxSize);
-		   pr.setProperty("hibernate.c3p0.timeout", c3p0TimeOut);
-		   pr.setProperty("hibernate.c3p0.max_statements", c3p0MaxStatement);
-		   
-		   cfg.addProperties(pr);
-		   
-		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().buildServiceRegistry();
+
+		pr.setProperty("hibernate.connection.driver_class",
+				"org.hsqldb.jdbcDriver");
+		pr.setProperty("hibernate.connection.url", dataSource);
+		pr.setProperty("hibernate.connection.password", password);
+		pr.setProperty("hibernate.connection.username", userName);
+		pr.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		pr.setProperty("hibernate.dialect", dialect);
+		pr.setProperty("hibernate.show_sql", showSql);
+		pr.setProperty("hibernate.format_sql", formatSql);
+		pr.setProperty("hibernate.default_schema", defautSchema);
+		pr.setProperty("hibernate.generate_statistics", "true");
+
+		pr.setProperty("hibernate.c3p0.idle_test_period", c3p0IdlePeriod);
+		pr.setProperty("hibernate.c3p0.min_size", c3p0MinSize);
+		pr.setProperty("hibernate.c3p0.max_size", c3p0MaxSize);
+		pr.setProperty("hibernate.c3p0.timeout", c3p0TimeOut);
+		pr.setProperty("hibernate.c3p0.max_statements", c3p0MaxStatement);
+
+		cfg.addProperties(pr);
+
+		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
+				.buildServiceRegistry();
 		return cfg.buildSessionFactory();
 	}
 

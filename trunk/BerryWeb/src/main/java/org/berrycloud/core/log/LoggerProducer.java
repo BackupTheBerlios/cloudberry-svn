@@ -1,4 +1,4 @@
-package log;
+package org.berrycloud.core.log;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;

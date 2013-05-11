@@ -3,7 +3,7 @@
                              http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.cloudberry.web</groupId>
+	<groupId>org.cloudberry.web</groupId>
 	<artifactId>berry-web</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>

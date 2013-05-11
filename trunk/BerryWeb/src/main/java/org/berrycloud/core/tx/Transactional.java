@@ -1,4 +1,4 @@
-package jpa;
+package org.berrycloud.core.tx;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,5 +11,5 @@ import javax.interceptor.InterceptorBinding;
 @InterceptorBinding
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Transactional {
-	
+	TransactionAttributeType type() default TransactionAttributeType.REQUIRED;
 }
