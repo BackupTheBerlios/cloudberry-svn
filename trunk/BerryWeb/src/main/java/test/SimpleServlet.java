@@ -49,17 +49,17 @@ public class SimpleServlet extends HttpServlet {
 		str = testService == null? "IT IS NULL" : "IT is NOT NULL";
 		log.info("LLLOOOGGG");
 		UserTest user = new UserTest();
-		user.setId(2L);
-		user.setName("Ivan2");
+	//	user.setId(2L);
+		user.setName("Ivan");
 		user.setAge(30);
 		userService.save(user );
 		
-		UserTest userLoad= userService.load(1L);
+	//	UserTest userLoad= userService.load(1L);
 		
 		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 "
 				+ "Transitional//EN\">\n" + "<HTML>\n"
 				+ "<HEAD><TITLE>Hello WWW</TITLE></HEAD>\n" + "<BODY>\n"
-				+ "<H1>TEST SIMPLE SERVLET WWW</H1>\n" + userLoad.getName() + "</BODY></HTML>");
+				+ "<H1>TEST SIMPLE SERVLET WWW</H1>\n" + user.getId() + "</BODY></HTML>");
 	}
 
 }

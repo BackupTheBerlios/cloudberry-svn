@@ -1,16 +1,16 @@
 package jpa.em;
 
-import java.io.IOException;
 import java.util.Stack;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import jpa.db.SessionConfigurationFactory;
 
-import org.hibernate.MappingException;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -18,8 +18,10 @@ import org.hibernate.SessionFactory;
 @ApplicationScoped
 public class SessionManagerStoreImpl implements SessionManagerStore, ServletContextListener{
 
+	@Inject
+	private Logger log;
 	
-	private SessionFactory sessionFactory;
+	private static SessionFactory sessionFactory;
 	
 	private ThreadLocal<Stack<Session>> sessionStackThreadLocal = new ThreadLocal<>();
 	
@@ -27,6 +29,7 @@ public class SessionManagerStoreImpl implements SessionManagerStore, ServletCont
 	public Session get() {
 		 final Stack<Session> sessionStack = sessionStackThreadLocal.get();
 	      if (sessionStack == null || sessionStack.isEmpty()) {
+	    	  log.debug("NO STACK");
 	         return null;
 	      } else
 	         return sessionStack.peek();
@@ -39,21 +42,7 @@ public class SessionManagerStoreImpl implements SessionManagerStore, ServletCont
 			sessionStack = new Stack<>();
 			sessionStackThreadLocal.set(sessionStack);
 		}
-		
-		try {
-			sessionFactory = new SessionConfigurationFactory().build();
-		} catch (MappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		final Session session = sessionFactory.openSession();
-			
 		sessionStack.push(session);
 		return session;
 	}
@@ -78,10 +67,7 @@ public class SessionManagerStoreImpl implements SessionManagerStore, ServletCont
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		try {
-		//	Class.forName("org.hsqldb.jdbcDriver");
 			sessionFactory = new SessionConfigurationFactory().build();
-			
-			
 		} catch (Exception ex ) {
 			throw new Error(ex);
 		} 

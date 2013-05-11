@@ -31,7 +31,7 @@ public class SessionConfigurationFactory {
 	private String defautSchema="berry";
 	private String showSql="true";
 	private String dialect = "org.hibernate.dialect.HSQLDialect";
-	private String dataSource = "jdbc:hsqldb:mem:mymemdb";
+	private String dataSource = "jdbc:hsqldb:hsql://192.168.1.20/xdb";
 
 	public SessionFactory build() throws MappingException,
 			ClassNotFoundException, IOException {
@@ -69,21 +69,21 @@ public class SessionConfigurationFactory {
 		Properties pr = new Properties();
 		
 		   pr.setProperty("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver");
-		   pr.setProperty("hibernate.connection.url","jdbc:hsqldb:file:mydb");
-		   pr.setProperty("hibernate.connection.password" ,"");
-		   pr.setProperty("hibernate.connection.username" ,"SA");
-		   pr.setProperty("hibernate.hbm2ddl.auto" ,"validate");
+		   pr.setProperty("hibernate.connection.url",dataSource);
+		   pr.setProperty("hibernate.connection.password" ,password);
+		   pr.setProperty("hibernate.connection.username" ,userName);
+		   pr.setProperty("hibernate.hbm2ddl.auto" ,"create-drop");
 		   pr.setProperty("hibernate.dialect" ,"org.hibernate.dialect.HSQLDialect");
 		   pr.setProperty("hibernate.show_sql" ,"true");
 		   pr.setProperty("hibernate.format_sql" ,"true");
-//		   pr.setProperty("hibernate.default_schema", defautSchema);
+		   pr.setProperty("hibernate.default_schema", defautSchema);
 		   pr.setProperty("hibernate.generate_statistics","true");
 		   
-//		   pr.setProperty("hibernate.c3p0.idle_test_period", c3p0IdlePeriod);
-//		   pr.setProperty("hibernate.c3p0.min_size", c3p0MinSize);
-//		   pr.setProperty("hibernate.c3p0.max_size", c3p0MaxSize);
-//		   pr.setProperty("hibernate.c3p0.timeout", c3p0TimeOut);
-//		   pr.setProperty("hibernate.c3p0.max_statements", c3p0MaxStatement);
+		   pr.setProperty("hibernate.c3p0.idle_test_period", c3p0IdlePeriod);
+		   pr.setProperty("hibernate.c3p0.min_size", c3p0MinSize);
+		   pr.setProperty("hibernate.c3p0.max_size", c3p0MaxSize);
+		   pr.setProperty("hibernate.c3p0.timeout", c3p0TimeOut);
+		   pr.setProperty("hibernate.c3p0.max_statements", c3p0MaxStatement);
 		   
 		   cfg.addProperties(pr);
 		   

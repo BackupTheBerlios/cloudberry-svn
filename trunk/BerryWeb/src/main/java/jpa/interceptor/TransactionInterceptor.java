@@ -8,6 +8,7 @@ import javax.interceptor.InvocationContext;
 import jpa.Transactional;
 import jpa.em.SessionManagerStore;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,10 +20,14 @@ public class TransactionInterceptor {
 	@Inject
 	private SessionManagerStore sessionManagerStore;
 	
+	@Inject
+	private Logger log;
+	
 	@AroundInvoke
 	public Object runInTransaction(InvocationContext invocationContext)
 			throws Exception {
 
+		  log.info("----------START transaction---------");
 	      Session session = sessionManagerStore.register();
 
 	      Object result = null;
@@ -35,7 +40,7 @@ public class TransactionInterceptor {
 	         try {
 	            if (tx.isActive()) {
 	                tx.rollback();
-	            //   logger.debug("Rolled back transaction");
+	                log.debug("Rolled back transaction");
 	            }
 	         } catch (HibernateException e1) {
 	           // logger.warn("Rollback of transaction failed -> " + e1);
@@ -44,8 +49,10 @@ public class TransactionInterceptor {
 	      } finally {
 	         if (session != null) {
 	        	 sessionManagerStore.unregister(session);
+	        	 session.close();
 	         }
 	      }
+	      log.info("----------END transaction---------");
 	      return result;
 	}
 
