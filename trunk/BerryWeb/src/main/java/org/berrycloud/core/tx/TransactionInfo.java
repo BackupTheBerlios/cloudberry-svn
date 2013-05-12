@@ -27,8 +27,8 @@ public class TransactionInfo {
 	public TransactionInfo noBeginNoCommit() {
 		TransactionInfo copy = new TransactionInfo(session);
 		copy.transaction = transaction;
-		allowBegin = false;
-		allowCommit = false;
+		copy.allowBegin = false;
+		copy.allowCommit = false;
 		return copy;
 	}
 
